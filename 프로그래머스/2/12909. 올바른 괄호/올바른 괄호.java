@@ -2,26 +2,22 @@ import java.util.*;
 
 class Solution {
     boolean solution(String s) {
-        int count = 0;
-        // 문자 배열 생성하기
-        String[] stringArray = s.split("");
-
-        for(int i = 0; i < stringArray.length; i++){
-            if (stringArray[i].equals("(")) {
-                count += 1;
-            } else if (stringArray[i].equals(")")) {
-                count -= 1;
+        int balance = 0;
+        
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                balance++;
+            } else {
+                balance--;
             }
-
-            if(count < 0){
+            
+            if (balance < 0) {
+                // 닫는 괄호가 많아지는 경우
                 return false;
             }
         }
         
-        if(count == 0){
-            return true;
-        }else{
-            return false;
-        }
+        // 모든 괄호를 처리한 후 균형이 맞다면
+        return balance == 0;
     }
 }
