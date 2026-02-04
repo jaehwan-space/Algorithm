@@ -1,12 +1,14 @@
 n = int(input())
-lists = input()
+s = input()
+
 r = 31
+m = 1234567891
 result = 0
 
-def stringtoint(str):
-    return ord(str) - 96
+def stringtoint(c):
+    return ord(c) - 96  # a=1
 
-for i in range(len(lists)):
-    result += stringtoint(lists[i]) * (r ** i)
-    
+for i in range(len(s)):
+    result = (result + stringtoint(s[i]) * (r ** i)) % m
+
 print(result)
