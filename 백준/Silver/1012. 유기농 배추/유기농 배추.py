@@ -2,38 +2,31 @@ import sys
 sys.setrecursionlimit(10**6)
 input = sys.stdin.readline
 
-T = int(input())
+t = int(input())
 
-dx = [1, -1, 0, 0]
-dy = [0, 0, 1, -1]
+def dfs(graph, loc):
+    x, y = loc
+    if 0 <= x < len(graph[0]) and 0 <= y < len(graph) and graph[y][x] == 1:
+        graph[y][x] = 0
+        dfs(graph, (x - 1, y))
+        dfs(graph, (x + 1, y))
+        dfs(graph, (x, y - 1))
+        dfs(graph, (x, y + 1))
+    
 
-def dfs(x, y):
-    visited[x][y] = True
+for _ in range(t):
+    m, n, k = map(int, input().split())
+    board = [[0] * m for _ in range(n)]
     
-    for i in range(4):
-        nx = x + dx[i]
-        ny = y + dy[i]
-        
-        if 0 <= nx < N and 0 <= ny < M:
-            if board[nx][ny] == 1 and not visited[nx][ny]:
-                dfs(nx, ny)
-
-for _ in range(T):
-    M, N, K = map(int, input().split())
-    
-    board = [[0]*M for _ in range(N)]
-    visited = [[False]*M for _ in range(N)]
-    
-    for _ in range(K):
+    for _ in range(k):
         x, y = map(int, input().split())
-        board[y][x] = 1  
+        board[y][x] = 1
     
-    count = 0
-    
-    for i in range(N):
-        for j in range(M):
-            if board[i][j] == 1 and not visited[i][j]:
-                dfs(i, j)
-                count += 1
+    result = 0
+    for i in range(n):
+        for j in range(m):
+            if board[i][j] == 1:
+                dfs(board, (j, i))
+                result += 1
                 
-    print(count)
+    print(result)
